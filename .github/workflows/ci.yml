@@ -8,22 +8,22 @@ on:
     branch:
       - main
 
-  jobs:
-      build:
-        runs-on: ubuntu-latest
+jobs:
+    build:
+      runs-on: ubuntu-latest
 
-        steps:
-          - name: Checkout código
-            uses: actions/checkout@v4
+      steps:
+        - name: Checkout código
+          uses: actions/checkout@v4
 
-          - name: Login no Docker Hub
-            run: docker/login-action@v3
-            with:
-              username: ${{ secrets.DOCKER_USER }}
-              password: ${{ secrets.DOCKER_PASS }}
+        - name: Login no Docker Hub
+          run: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_USER }}
+            password: ${{ secrets.DOCKER_PASS }}
 
-          - name: Build com Docker Compose
-            run: docker compose build
+        - name: Build com Docker Compose
+          run: docker compose build
 
-          - name: Push com Docker Compose
-            run: docker compose push
+        - name: Push com Docker Compose
+          run: docker compose push
