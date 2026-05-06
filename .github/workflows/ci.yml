@@ -27,3 +27,25 @@ jobs:
 
       - name: Push com Docker Compose
         run: docker compose push
+
+  deploy:
+    needs: build
+    runs_on: ubuntu-latest
+    steps:
+      - name: deploy via SSH (Appleboy)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          scripts: |
+            # Entra na home do usuario
+            cd ~
+            # Se o projeto não existe, clona. Se existe, pull.
+            if [ ! -d "alice_app" ]; then
+              git clone https://github.com/${{ github.repository }} alice_app
+            fi
+            cd alice_app
+            git pull origin main
+            docker compose pull
+            docker compose up -d
