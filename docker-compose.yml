@@ -21,7 +21,7 @@ services:
       - "3010:3000"
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/tarefas"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/tarefas || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
