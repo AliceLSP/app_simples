@@ -17,8 +17,6 @@ services:
       DB_HOST: db
     depends_on:
       - db
-    ports:
-      - "8010:3000"
 
   web:
     build: ./frontend
