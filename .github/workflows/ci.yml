@@ -101,11 +101,14 @@ jobs:
       - name: Subir ambiente de teste
         run: docker compose up -d
 
-      - name: Validar comunicação (Ping)
-        run: docker compose exec -T app-simples ping -c 1 servico-vizinho
+      - name: Ver logs da API
+        run: docker logs alice_api
+
+      - name: Testar API
+        run: curl -f http://localhost:3010/tarefas
 
       - name: Rodar testes unitários
-        run: docker compose exec -T app-simples npm test
+        run: docker compose exec -T api npm test
 
   deploy:
     needs: test
